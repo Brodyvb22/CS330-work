@@ -3,20 +3,27 @@
 
 <head>
     <title>Hello</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="site.css" />
     <script type="text/javascript" src="main.js" defer></script>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container mt-5">
         <header>
-            <div class="notification is-warning" id="warnings" hidden><button class="delete"></button></div>
+            <div class="notification is-warning" id="warnings" hidden>
+                <button class="delete"></button>
+            </div>
             <h1 id="greeting" class="title"></h1>
         </header>
         <main>
-            <p id="numberInfo" class="has-background-info-light	"></p>
-            <table id="nPrimes" class="table is-striped">
-                <thead></thead>
+            <p id="numberInfo" class="has-background-info-light p-3"></p>
+            <table id="nPrimes" class="table is-striped is-bordered is-hoverable mt-4">
+                <thead>
+                    <tr>
+                        <th colspan="10">Prime Numbers</th>
+                    </tr>
+                </thead>
                 <tbody></tbody>
             </table>
         </main>

@@ -1,71 +1,69 @@
 "use strict";
 
-/**
- * Greet user by name
- *
- * @param {string} name visitor's name
- * @param {string} selector element to use for display
- */
 function greet(name, selector) {
-  // TODO: Implement this function
+  const el = document.querySelector(selector);
+  el.textContent = `Hello, ${name}!`;
 }
 
-/**
- * Check if a number is prime
- *
- * @param {number} number number to check
- * @return {boolean} result of the check
- */
 function isPrime(number) {
-  // TODO: Implement this function
+  if (number < 2) return false;
+  if (number == 2) return true;
+  if (number % 2 == 0) return false;
+  for (let i = 3; i <= Math.sqrt(number); i += 2) {
+    if (number % i == 0) return false;
+  }
+  return true;
 }
 
-/**
- * Print whether a number is prime
- *
- * @param {number} number number to check
- * @param {string} selector element to use for display
- */
 function printNumberInfo(number, selector) {
-  // TODO: Implement this function
+  const el = document.querySelector(selector);
+  const primeStatus = isPrime(number)
+  let primeStatus;
+  if (isPrime(number)) {
+    primeStatus = "is a prime number.";
+  } else {
+    primeStatus = "is not a prime number.";
+  }
+
+  el.textContent = `The number ${number} ${primeStatus}`;
 }
 
-/**
- * Generate an array of prime numbers
- *
- * @param {number} number number of primes to generate
- * @return {number[]} an array of `number` prime numbers
- */
 function getNPrimes(number) {
-  // TODO: Implement this function
+  const primes = [];
+  let candidate = 2;
+  while (primes.length < number) {
+    if (isPrime(candidate)) primes.push(candidate);
+    candidate++;
+  }
+  return primes;
 }
 
-/**
- * Print a table of prime numbers
- *
- * @param {number} number number of primes to display
- * @param {string} selector element to use for display
- */
 function printNPrimes(number, selector) {
-  // TODO: Implement this function
+  const primes = getNPrimes(number);
+  const tbody = document.querySelector(selector + " tbody");
+  tbody.innerHTML = "";
+
+  for (let i = 0; i < primes.length; i += 10) {
+    const row = document.createElement("tr");
+    for (let j = i; j < i + 10 && j < primes.length; j++) {
+      const cell = document.createElement("td");
+      cell.textContent = primes[j];
+      row.appendChild(cell);
+    }
+    tbody.appendChild(row);
+  }
 }
 
-/**
- * Display warning about missing URL query parameters
- *
- * @param {Object} urlParams URL parameters
- * @param {string} selector element to use for display
- */
 function displayWarnings(urlParams, selector) {
   // TODO: Implement this function
 }
 
 window.onload = function () {
-  // TODO: Initialize the following variables
-  let urlParams = "";
-  let name = "";
-  let number = "";
-  this.displayWarnings(urlParams, "#warnings");
+  const urlParams = new URLSearchParams(window.location.search);
+  const name = urlParams.get("name") || "student";
+  const number = parseInt(urlParams.get("number")) || 330;
+
+  displayWarnings(urlParams, "#warnings");
   greet(name, "#greeting");
   printNumberInfo(number, "#numberInfo");
   printNPrimes(number, "table#nPrimes");
@@ -75,7 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
   (document.querySelectorAll(".notification .delete") || []).forEach(
     ($delete) => {
       const $notification = $delete.parentNode;
-
       $delete.addEventListener("click", () => {
         $notification.parentNode.removeChild($notification);
       });
