@@ -1,13 +1,35 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css";
 
 .critical {
+    background-color: red;
+    font-weight: bold;
+    color: black;
 }
 
 .important {
+    background-color: yellow;
+    font-weight: bold;
 }
 
 .normal {
+    background-color: lightgreen;
 }
 
 .low {
+    background-color: green;
+}
+
+#taskList {
+    border-spacing: 0 10px;
+}
+
+#taskList th, 
+#taskList td {
+    padding: 12px 16px;
+    text-align: left;
+}
+
+#taskList thead {
+    background-color: black;
+    font-weight: bold;
 }
