@@ -16,7 +16,7 @@ function addTask() {
     let dueDateEl = document.querySelector("#dueDate");
 
     if (!titleEl.value || !dueDateEl.value || !assignedToEl.value || !priorityEl.value) {
-        alert("All fields are required!");
+        //alert("All fields are required!");
         return;
     }
 
