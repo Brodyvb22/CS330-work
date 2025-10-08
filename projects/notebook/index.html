@@ -1,21 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>Notebook</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
-    <script type="text/javascript" defer src=js/model.js></script>
-    <script type="text/javascript" defer src=js/view.js></script>
-    <script type="text/javascript" defer src=js/controller.js></script>
+    <script type="text/javascript" defer src="js/model.js"></script>
+    <script type="text/javascript" defer src="js/view.js"></script>
+    <script type="text/javascript" defer src="js/controller.js"></script>
+
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
     <div class="section">
+        <div class="container">
+            <h1 class="title has-text-centered">Notebook</h1>
+            <form id="noteForm" class="box">
+
+            <div id="fieldTitle" class="field">
+                <label class="label">Title</label>
+                <div class="control">
+                <input class="input" type="text" id="title" placeholder="Enter note title" required>
+                </div>
+                <p class="help is-danger" id="titleHelp" style="display: none;">Title is required</p>
+            </div>
+
+            <div id="fieldColor" class="field">
+                <label class="label">Color</label>
+                <div class="control">
+                <div class="select">
+                    <select id="color" required>
+                    <option value="" disabled selected>Select color</option>
+                    <option value="is-primary">Blue</option>
+                    <option value="is-link">Cyan</option>
+                    <option value="is-info">Teal</option>
+                    <option value="is-success">Green</option>
+                    <option value="is-warning">Yellow</option>
+                    <option value="is-danger">Red</option>
+                    </select>
+                </div>
+                </div>
+                <p class="help is-danger" id="colorHelp" style="display: none;">Color is required</p>
+            </div>
+
+            <div id="fieldText" class="field">
+                <label class="label">Text</label>
+                <div class="control">
+                <textarea class="textarea" id="text" placeholder="Write your note here..." required></textarea>
+                </div>
+                <p class="help is-danger" id="textHelp" style="display: none;">Text is required</p>
+            </div>
+
+            <div class="field has-text-centered">
+                <button type="button" class="button is-primary" id="addNote">Add Note</button>
+            </div>
+            </form>
+        </div>
     </div>
 
     <div class="section">
+        <div class="container" id="notesContainer"></div>
     </div>
+
 </body>
 
 </html>
