@@ -12,42 +12,40 @@
 <body>
     <header>
         <div>
-            <h1>Trivia night!</h1>
+            <h1 class="title has-text-centered">Trivia night!</h1>
         </div>
     </header>
-    <main>
-        <section>
-            <div>
-                <div>
-                    <div>
-                        <div id="categorySelectField">
-                            <label for="categorySelect">Category</label>
-                            <div>
-                                <select id="categorySelect">
-                                    <!-- TODO: Add categories -->
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div id="numberInputField">
-                            <label for="numberInput">Number of questions</label>
-                            <div>
-                                <input type="number" id="numberInput">
-                            </div>
-                            <p></p>
-                        </div>
-                    </div>
+
+    <main class="section">
+        <section class="box">
+            <div class="field">
+                <label class="label" for="categorySelect">Category</label>
+                <div class="control">
+                    <select id="categorySelect" class="select">
+                        <option value="18">Science: Computers</option>
+                        <option value="20">Mythology</option>
+                        <option value="22">Geography</option>
+                        <option value="23">History</option>
+                    </select>
                 </div>
-                <div>
-                    <input type=button id="getQuestionsBtn" />
+            </div>
+
+            <div class="field">
+                <label class="label" for="numberInput">Number of questions (1–10)</label>
+                <div class="control">
+                    <input type="number" id="numberInput" class="input" min="1" max="10" />
                 </div>
+                <p id="warningMsg" class="help"></p>
+            </div>
+
+            <div class="control">
+                <button id="getQuestionsBtn" class="button is-primary">Get Questions</button>
+            </div>
         </section>
-        <section>
-            <div>
-                <div id="questionsDiv">
-                    <!-- TODO: Add questions -->
-                </div>
+
+        <section class="section">
+            <div id="questionsDiv" class="columns is-multiline">
+                
             </div>
         </section>
     </main>

@@ -1,9 +1,21 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css";
 
-.hard {}
+/* Difficulty-based color borders */
+.easy {
+  border: 2px solid green; /* green */
+}
 
-.medium {}
+.medium {
+  border: 2px solid yellow; /* yellow */
+}
 
-.easy {}
+.hard {
+  border: 2px solid red; /* red */
+}
 
-.correct_answer {}
+/* Correct answer highlight */
+.correct_answer {
+  background-color: green;
+  color: white;
+  font-weight: bold;
+}
