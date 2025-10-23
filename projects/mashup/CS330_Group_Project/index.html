@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sport Info</title>
+    <link href="css/site.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1 class="title has-text-centered has-text-white">Sport Info</h1>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div id="formDiv">
+                <div class="field">
+                    <div class="control">
+                        <form class="form">
+                            <label for="teamsDropdown">Choose Your Team</label>
+                            <select class="input" id="teamsDropdown" name="myOption">
+                                <option value="" selected disabled hidden>Select Team</option>
+                            </select>
+                            <input class="button is-fullwidth my-2 has-background-primary" type="submit" value="Submit">
+                        </form>
+                        <div class="box" id="recentSearchesDiv">
+                            <h1 class="label has-text-centered has-text-weight-bold is-small">Recent Searches</h1>
+                            <ul id="recentList" class="columns is-mobile is-small"></ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="container my-2" id="BannerDiv"></div>
+            <div class="box" id="weatherDiv"><h1 class="has-text-centered">Want to know the weather at you're favorite teams stadium? Select them and we will let you know!</h1></div>
+            <div class="columns">
+                <div class="column is-three-fifths">
+                    <div class="box" id="infoDiv">
+                        <h1>MLB (Major League Baseball) is the top professional 
+                            baseball league in the U.S. and Canada, with 30 teams 
+                            split between the American and National Leagues. Teams 
+                            play 162 games each season, leading to playoffs and the 
+                            World Series. It's known for its deep history, iconic players, 
+                            and global reach.
+                        </h1>
+                    </div>
+                </div>
+                <div class="column is-two-fifths">
+                    <div class="container is-full-width" id="BadgeDiv">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Major_League_Baseball_logo.svg" alt="MLB Logo" width="300">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <script type="module" src="./js/controller.js"></script>
+</body>
+
+</html>
