@@ -17,6 +17,9 @@
                             <div class="control select is-fullwidth">
                                 <select name="language" id="selLang">
                                     <!-- TODO: Populate language options -->
+                                    {% for code, name in languages.items() %}
+                                    <option value="{{ code }}">{{ name }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -25,6 +28,9 @@
                             <div class="control select is-fullwidth">
                                 <select name="category" id="selCat">
                                     <!-- TODO: Populate category options -->
+                                    {% for cat in categories %}
+                                    <option value="{{ cat }}">{{ cat|capitalize }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -33,6 +39,9 @@
                             <div class="control select is-fullwidth">
                                 <select name="number" id="selNum">
                                     <!-- TODO: Populate number options -->
+                                    {% for n in numbers %}
+                                    <option value="{{ n }}">{{ n }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -48,6 +57,8 @@
     <div class="section">
         <div class="container" id="jokes">
             <!-- TODO: Populate with jokes or a placeholder -->
+            {% block content %}
+            {% endblock %}
         </div>
     </div>
 </body>

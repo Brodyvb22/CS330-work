@@ -1,4 +1,19 @@
 {% extends "base.html" %}
+
 {% block content %}
-<!-- TODO: Add jokes here -->
+{% if jokes %}
+    {% for joke in jokes %}
+    <article class="message is-light">
+        <div class="message-body">
+            {{ joke }}
+        </div>
+    </article>
+    {% endfor %}
+{% else %}
+<article class="message is-light">
+    <div class="message-body has-text-centered">
+        No jokes yet — pick options and click "Amuse me!"
+    </div>
+</article>
+{% endif %}
 {% endblock %}
