@@ -17,3 +17,8 @@ class Joke:
     """
 
     # TODO: Implement this class
+    def __init__(self, language: str, category: str, text: str):
+        self.language = language
+        self.category = category
+        self.text = text
+##DONE
