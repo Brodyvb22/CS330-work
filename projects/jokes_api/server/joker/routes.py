@@ -9,7 +9,7 @@ jokes api routes
 from typing import Literal
 
 from flask import Blueprint, abort, jsonify, current_app
-from werkzeug import Response
+from flask import Response
 from werkzeug.exceptions import NotFound
 
 from .logic import Joker

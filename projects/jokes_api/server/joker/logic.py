@@ -5,7 +5,7 @@ jokes api logic
 @author:
 @version: 2025.11
 """
-
+import os
 import pathlib
 import random
 import tomllib
@@ -39,8 +39,10 @@ class Joker:
         """
         # TODO: Implement this method
 
-        with open("config.toml", "rb") as f:
+        CONFIG_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "config.toml")
+        with open(CONFIG_PATH, "rb") as f:
             languages = tomllib.load(f)["LANGUAGES"]
+
 
         cls._dataset = []
         for lang in languages.keys():
