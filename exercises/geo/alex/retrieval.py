@@ -19,5 +19,17 @@ def get_data_from_db(query: str, params: tuple | None = None) -> list:
     :param query: parametrized query to execute
     :param params: query parameters
     """
-    # TODO: Implement this function
-    ...
+    db_file = current_app.config["DB_FILE"]
+
+    conn = sqlite3.connect(db_file)
+    conn.row_factory = sqlite3.Row 
+    cur = conn.cursor()
+
+    if params:
+        cur.execute(query, params)
+    else:
+        cur.execute(query)
+
+    results = cur.fetchall()
+    conn.close()
+    return results

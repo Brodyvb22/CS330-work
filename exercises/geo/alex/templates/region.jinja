@@ -2,6 +2,23 @@
 
 {% block searchform %}
 
-{# TODO: Add search form #}
+<form class="field is-grouped" action="{{ url_for('main.region') }}" method="get">
+    <div class="control">
+        <div class="select">
+            <select name="name" required>
+                <option value="">Select a region</option>
+                {% for region in search_regions %}
+                    <option value="{{ region }}" {% if region == selected_region %}selected{% endif %}>
+                        {{ region }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="control">
+        <button type="submit" class="button is-info">Go</button>
+    </div>
+</form>
+
 
 {% endblock searchform %}

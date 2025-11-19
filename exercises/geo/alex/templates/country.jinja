@@ -2,12 +2,51 @@
 
 {% block searchform %}
 
-{# TODO: Add search form #}
+<form class="field is-grouped" action="{{ url_for('main.country') }}" method="get">
+    <div class="control">
+        <div class="select">
+            <select name="name" required>
+                <option value="">Select a country</option>
+                {% for country in search_countries %}
+                    <option value="{{ country }}" {% if country == country_name %}selected{% endif %}>
+                        {{ country }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="control">
+        <button type="submit" class="button is-info">Go</button>
+    </div>
+</form>
+
 
 {% endblock searchform %}
 
 {% block content %}
 
-{# TODO: Display country cities #}
+{% if cities %}
+    <table class="table is-striped is-hoverable is-fullwidth">
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Admin Region</th>
+                <th>Population</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for city in cities %}
+                <tr {% if city.is_capital %}class="has-background-info-light"{% endif %}>
+                    <td>{{ city.name }}</td>
+                    <td>{{ city.admin_region or '—' }}</td>
+                    <td>{{ city.population or '—' }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No cities to display for this country.</p>
+{% endif %}
+
 
 {% endblock content %}

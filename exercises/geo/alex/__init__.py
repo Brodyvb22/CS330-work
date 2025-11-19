@@ -39,4 +39,15 @@ def create_app():
     # TODO: Populate app.config["regions"] with all the distinct regions for later use in templates
     # TODO: Populate app.config["subregions"] with all the distinct subregions for later use in templates
     # TODO: Populate app.config["countries"] with all the distinct countries for later use in templates
+    
+    with app.app_context():
+        regions_query = "SELECT DISTINCT continental_region FROM country WHERE continental_region IS NOT NULL ORDER BY continental_region;"
+        app.config["regions"] = [row["continental_region"] for row in get_data_from_db(regions_query)]
+        
+        subregions_query = "SELECT DISTINCT subregion FROM country WHERE subregion IS NOT NULL ORDER BY subregion;"
+        app.config["subregions"] = [row["subregion"] for row in get_data_from_db(subregions_query)]
+
+        countries_query = "SELECT name FROM country ORDER BY name;"
+        app.config["countries"] = [row["name"] for row in get_data_from_db(countries_query)]
+
     return app

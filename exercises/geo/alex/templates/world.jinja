@@ -2,12 +2,71 @@
 
 {% block searchform %}
 
-{# TODO: Add search form #}
+<form class="field is-grouped" action="{{ url_for('main.country') }}" method="get">
+    <div class="control">
+        <div class="select">
+            <select name="name" required>
+                <option value="">Select a country</option>
+                {% for country in search_countries %}
+                    <option value="{{ country }}">{{ country }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="control">
+        <button type="submit" class="button is-info">Go</button>
+    </div>
+</form>
+
 
 {% endblock searchform %}
 
 {% block content %}
 
-{# TODO: Display country data #}
+{% if countries %}
+    <table class="table is-striped is-hoverable is-fullwidth">
+        <thead>
+            <tr>
+                <th>Official Name</th>
+                <th>Capital</th>
+                <th>Region</th>
+                <th>Subregion</th>
+                <th>Area (km²)</th>
+                <th>Population 2023</th>
+                <th>Population Density</th>
+                <th>Government System</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in countries %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('main.country', name=c.name) }}">
+                            {{ c.official_name }}
+                        </a>
+                    </td>
+                    <td>{{ c.capital_name or '—' }}</td>
+                    <td>
+                        <a href="{{ url_for('main.region', name=c.continental_region) }}">
+                            {{ c.continental_region or '—' }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('main.subregion', name=c.subregion) }}">
+                            {{ c.subregion or '—' }}
+                        </a>
+                    </td>
+                    <td>{{ c.area or '—' }}</td>
+                    <td>{{ c.population_2023 or '—' }}</td>
+                    <td>{{ c.density or '—' }}</td>
+                    <td>{{ c.government_system or '—' }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No countries to display.</p>
+{% endif %}
+
 
 {% endblock content %}

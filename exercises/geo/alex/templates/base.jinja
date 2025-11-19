@@ -27,7 +27,15 @@
         </div>
     </nav>
     <div class="container" id="messages">
-        {# TODO: Display warnings here #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="notification is-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
     </div>
     <main class="container">
         {% block content %} {% endblock content %}
