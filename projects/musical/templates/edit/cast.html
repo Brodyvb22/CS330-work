@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Cast (Roles)</h2>
+
+<form method="POST">
+    <label>Character/Role name:
+      <input type="text" name="name" required>
+    </label>
+
+    <label>Group name (optional):
+      <input type="text" name="group_name" placeholder="Mersistes, Gulls, etc.">
+    </label>
+
+    <label>Assign Student (optional):
+      <select name="student_id">
+        <option value="">--Unassigned--</option>
+        {% for s in students %}
+          <option value="{{ s.id }}">{{ s.name }} ({{ s.year }})</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>Production:
+      <select name="production_id">
+        <option value="">--None--</option>
+        {% for p in productions %}
+          <option value="{{ p.id }}">{{ p.title }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <button type="submit">Add Role</button>
+</form>
+
+<hr>
+
+<h3>Existing Roles</h3>
+<ul>
+  {% for r in roles %}
+    <li>
+      <strong>{{ r.name }}</strong>
+      {% if r.group_name %} (Group: {{ r.group_name }}){% endif %}
+      - Student:
+      {% if r.student %}{{ r.student.name }} ({{ r.student.year }}){% else %}<em>Unassigned</em>{% endif %}
+      {% if r.production %}- Production: {{ r.production.title }}{% endif %}
+    </li>
+  {% else %}
+    <li>No roles yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

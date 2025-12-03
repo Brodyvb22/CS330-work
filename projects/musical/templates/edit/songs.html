@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Songs</h2>
+
+<form method="POST">
+    <label>Song Title:
+      <input type="text" name="title" required>
+    </label>
+    <label>Act:
+      <input type="text" name="act">
+    </label>
+    <label>Production:
+      <select name="production_id">
+        <option value="">--None--</option>
+        {% for p in productions %}
+          <option value="{{ p.id }}">{{ p.title }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <fieldset>
+      <legend>Performers (select one or more roles)</legend>
+      {% for r in roles %}
+        <label><input type="checkbox" name="performers" value="{{ r.id }}"> {{ r.name }}{% if r.student %} — {{ r.student.name }}{% endif %}</label><br>
+      {% endfor %}
+    </fieldset>
+
+    <button type="submit">Add Song</button>
+</form>
+
+<hr>
+
+<h3>Existing Songs</h3>
+<ul>
+  {% for s in songs %}
+    <li>
+      <strong>{{ s.title }}</strong>
+      {% if s.act %}- Act {{ s.act }}{% endif %}
+      {% if s.production %}- Prod: {{ s.production.title }}{% endif %}
+      <ul>
+        {% for sp in s.performers %}
+          <li>{{ sp.role.name }}{% if sp.role.student %} — {{ sp.role.student.name }}{% endif %}</li>
+        {% else %}
+          <li><em>No performers assigned</em></li>
+        {% endfor %}
+      </ul>
+    </li>
+  {% else %}
+    <li>No songs yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

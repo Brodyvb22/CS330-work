@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Creative Team{% endblock %}
+{% block content %}
+<h1>Creative Team</h1>
+
+<ul>
+{% for member in team %}
+    <li>
+        <strong>{{ member.role }}:</strong> {{ member.name }}
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

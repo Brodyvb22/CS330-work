@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>High School Musical</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+  
+  </style>
+</head>
+<body>
+  <header>
+    <h1>High School Musical — Director Interface</h1>
+    <nav>
+      <strong>Edit:</strong>
+      <a href="{{ url_for('edit.production') }}">Productions</a>
+      <a href="{{ url_for('edit.cast') }}">Cast</a>
+      <a href="{{ url_for('edit.crew') }}">Crew</a>
+      <a href="{{ url_for('edit.team') }}">Creative Team</a>
+      <a href="{{ url_for('edit.songs') }}">Songs</a>
+      &nbsp; | &nbsp;
+      <strong>View:</strong>
+      <a href="{{ url_for('view.program') }}">Program</a>
+      <a href="{{ url_for('view.cast') }}">View Cast</a>
+      <a href="{{ url_for('view.crew') }}">View Crew</a>
+      <a href="{{ url_for('view.team') }}">View Team</a>
+      <a href="{{ url_for('view.songs') }}">View Songs</a>
+      <a href="{{ url_for('view.thanks') }}">Thanks</a>
+    </nav>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="flash {{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

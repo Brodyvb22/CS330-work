@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Productions</h2>
+
+<form method="POST">
+    <label>Title: <input type="text" name="title" required></label>
+    <label>Subtitle: <input type="text" name="subtitle"></label>
+    <label>Cover Image URL: <input type="text" name="cover_image"></label>
+    <label>Dates (comma separated): <input type="text" name="dates"></label>
+    <label>Location: <input type="text" name="location"></label>
+    <label>Price: <input type="number" step="0.01" name="price"></label>
+    <label>Copyright: <input type="text" name="copyright"></label>
+    <label>Notes:<br><textarea name="notes" rows="4" cols="60"></textarea></label>
+    <button type="submit">Save Production</button>
+</form>
+
+<hr>
+<h3>Existing Productions</h3>
+<ul>
+  {% for p in productions %}
+    <li><strong>{{ p.title }}</strong> {% if p.dates %}- {{ p.dates }}{% endif %}</li>
+  {% else %}
+    <li>No productions yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

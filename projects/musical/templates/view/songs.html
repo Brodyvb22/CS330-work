@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Songs{% endblock %}
+
+{% block content %}
+<h1>Songs</h1>
+
+{# --- ACT I --- #}
+<h2>Act I</h2>
+<table>
+    <tr>
+        <th>Song Title</th>
+        <th>Performers</th>
+    </tr>
+
+    {% set has_act1 = false %}
+    {% for song in songs %}
+        {% if song.act|string == "1" %}
+            {% set has_act1 = true %}
+            <tr>
+                <td>{{ song.title }}</td>
+                <td>
+                    {% if song.performers %}
+                        <ul>
+                        {% for perf in song.performers %}
+                            <li>{{ perf.role.name }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <em>No performers listed</em>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
+{# --- INTERMISSION --- #}
+{% set has_act2 = false %}
+{% for song in songs %}
+    {% if song.act|string == "2" %}
+        {% set has_act2 = true %}
+    {% endif %}
+{% endfor %}
+
+{% if has_act1 and has_act2 %}
+    <h2>Intermission: 30 minutes</h2>
+{% endif %}
+
+{# --- ACT II --- #}
+{% if has_act2 %}
+<h2>Act II</h2>
+<table>
+    <tr>
+        <th>Song Title</th>
+        <th>Performers</th>
+    </tr>
+
+    {% for song in songs %}
+        {% if song.act|string == "2" %}
+            <tr>
+                <td>{{ song.title }}</td>
+                <td>
+                    {% if song.performers %}
+                        <ul>
+                        {% for perf in song.performers %}
+                            <li>{{ perf.role.name }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <em>No performers listed</em>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}

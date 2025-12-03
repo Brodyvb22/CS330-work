@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Crew{% endblock %}
+{% block content %}
+<h1>Crew</h1>
+
+<ul>
+{% for c in crew %}
+    <p>{{ c.job }} — {{ c.student.name if c.student else "" }}</p>
+{% endfor %}
+</ul>
+{% endblock %}

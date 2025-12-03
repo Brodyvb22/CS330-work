@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Crew (Student tech / stage)</h2>
+
+<form method="POST">
+    <label>Job / Responsibility:
+      <input type="text" name="job" required>
+    </label>
+
+    <label>Assign Student:
+      <select name="student_id">
+        <option value="">--None--</option>
+        {% for s in students %}
+          <option value="{{ s.id }}">{{ s.name }} ({{ s.year }})</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>Production:
+      <select name="production_id">
+        <option value="">--None--</option>
+        {% for p in productions %}
+          <option value="{{ p.id }}">{{ p.title }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <button type="submit">Add Crew</button>
+</form>
+
+<hr>
+
+<h3>Existing Crew</h3>
+<ul>
+  {% for c in crew_members %}
+    <li>
+      <strong>{{ c.job }}</strong>
+      {% if c.student %}- Student: {{ c.student.name }}{% endif %}
+      {% if c.production %}- Production: {{ c.production.title }}{% endif %}
+    </li>
+  {% else %}
+    <li>No crew yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
