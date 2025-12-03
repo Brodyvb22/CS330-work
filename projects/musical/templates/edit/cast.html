@@ -1,51 +1,75 @@
 {% extends "base.html" %}
+{% block title %}Edit Cast{% endblock %}
 {% block content %}
-<h2>Edit Cast (Roles)</h2>
+<div class="box">
+  <h2 class="title is-4">Add Role (Cast)</h2>
+  <form method="POST">
+    <div class="field">
+      <label class="label">Character / Role name</label>
+      <div class="control"><input class="input" type="text" name="name" required></div>
+    </div>
 
-<form method="POST">
-    <label>Character/Role name:
-      <input type="text" name="name" required>
-    </label>
+    <div class="field">
+      <label class="label">Group name (optional)</label>
+      <div class="control"><input class="input" type="text" name="group_name"></div>
+    </div>
 
-    <label>Group name (optional):
-      <input type="text" name="group_name" placeholder="Mersistes, Gulls, etc.">
-    </label>
+    <div class="field">
+      <label class="label">Assign Student</label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select name="student_id">
+            <option value="">--None--</option>
+            {% for s in students %}
+              <option value="{{ s.id }}">{{ s.name }} ({{ s.year }})</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
 
-    <label>Assign Student (optional):
-      <select name="student_id">
-        <option value="">--Unassigned--</option>
-        {% for s in students %}
-          <option value="{{ s.id }}">{{ s.name }} ({{ s.year }})</option>
-        {% endfor %}
-      </select>
-    </label>
+    <div class="field">
+      <label class="label">Production</label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select name="production_id">
+            <option value="">--None--</option>
+            {% for p in productions %}
+              <option value="{{ p.id }}">{{ p.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
 
-    <label>Production:
-      <select name="production_id">
-        <option value="">--None--</option>
-        {% for p in productions %}
-          <option value="{{ p.id }}">{{ p.title }}</option>
-        {% endfor %}
-      </select>
-    </label>
+    <div class="field">
+      <div class="control"><button class="button is-primary" type="submit">Add Role</button></div>
+    </div>
+  </form>
+</div>
 
-    <button type="submit">Add Role</button>
-</form>
-
-<hr>
-
-<h3>Existing Roles</h3>
-<ul>
-  {% for r in roles %}
-    <li>
-      <strong>{{ r.name }}</strong>
-      {% if r.group_name %} (Group: {{ r.group_name }}){% endif %}
-      - Student:
-      {% if r.student %}{{ r.student.name }} ({{ r.student.year }}){% else %}<em>Unassigned</em>{% endif %}
-      {% if r.production %}- Production: {{ r.production.title }}{% endif %}
-    </li>
-  {% else %}
-    <li>No roles yet.</li>
-  {% endfor %}
-</ul>
+<div class="box">
+  <h3 class="title is-5">Existing Roles</h3>
+  <table class="table is-fullwidth">
+    <thead><tr><th>Role</th><th>Group</th><th>Student</th><th>Production</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for r in roles %}
+      <tr>
+        <td>{{ r.name }}</td>
+        <td>{{ r.group_name or '-' }}</td>
+        <td>{{ r.student.name if r.student else '-' }}</td>
+        <td>{{ r.production.title if r.production else '-' }}</td>
+        <td>
+          <a class="button is-small is-info" href="{{ url_for('edit.edit_role', id=r.id) }}">Edit</a>
+          <form style="display:inline" method="POST" action="{{ url_for('edit.delete_role', id=r.id) }}" onsubmit="return confirm('Delete role?');">
+            <button class="button is-small is-danger" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5">No roles yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

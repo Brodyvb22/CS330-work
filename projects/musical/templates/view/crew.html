@@ -1,11 +1,20 @@
 {% extends "base.html" %}
 {% block title %}Crew{% endblock %}
 {% block content %}
-<h1>Crew</h1>
-
-<ul>
-{% for c in crew %}
-    <p>{{ c.job }} — {{ c.student.name if c.student else "" }}</p>
-{% endfor %}
-</ul>
+<div class="box">
+  <h2 class="title is-4">Crew</h2>
+  <table class="table is-fullwidth">
+    <thead><tr><th>Job</th><th>Student</th></tr></thead>
+    <tbody>
+      {% for c in crew %}
+      <tr>
+        <td>{{ c.job }}</td>
+        <td>{{ c.student.name if c.student else '-' }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="2">No crew yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

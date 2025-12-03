@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Edit Song{% endblock %}
+{% block content %}
+<div class="box">
+  <h2 class="title is-4">Edit Song</h2>
+  <form method="POST">
+    <div class="field">
+      <label class="label">Title</label>
+      <div class="control"><input class="input" name="title" value="{{ song.title }}"></div>
+    </div>
+
+    <div class="field">
+      <label class="label">Act (1 or 2)</label>
+      <div class="control"><input class="input" name="act" value="{{ song.act }}"></div>
+    </div>
+
+    <div class="field">
+      <label class="label">Production</label>
+      <div class="control">
+        <div class="select"><select name="production_id">
+          <option value="">--None--</option>
+          {% for p in productions %}
+            <option value="{{ p.id }}" {% if song.production_id == p.id %}selected{% endif %}>{{ p.title }}</option>
+          {% endfor %}
+        </select></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Performers (select roles)</label>
+      <div class="control">
+        {% for r in roles %}
+          <label class="checkbox">
+            <input type="checkbox" name="performers" value="{{ r.id }}" {% if r.id in current %}checked{% endif %}>
+            {{ r.name }} {% if r.student %}— {{ r.student.name }}{% endif %}
+          </label><br>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="field"><div class="control"><button class="button is-primary">Save</button></div></div>
+  </form>
+</div>
+{% endblock %}

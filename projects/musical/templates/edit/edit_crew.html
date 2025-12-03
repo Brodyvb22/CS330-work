@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Edit Crew{% endblock %}
+{% block content %}
+<div class="box">
+  <h2 class="title is-4">Edit Crew</h2>
+  <form method="POST">
+    <div class="field">
+      <label class="label">Job</label>
+      <div class="control"><input class="input" name="job" value="{{ member.job }}"></div>
+    </div>
+
+    <div class="field">
+      <label class="label">Student (optional)</label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select name="student_id">
+            <option value="">--None--</option>
+            {% for s in students %}
+              <option value="{{ s.id }}" {% if member.student_id == s.id %}selected{% endif %}>{{ s.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Production</label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select name="production_id">
+            <option value="">--None--</option>
+            {% for p in productions %}
+              <option value="{{ p.id }}" {% if member.production_id == p.id %}selected{% endif %}>{{ p.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field"><div class="control"><button class="button is-primary">Save</button></div></div>
+  </form>
+</div>
+{% endblock %}

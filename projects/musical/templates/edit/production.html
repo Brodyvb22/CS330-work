@@ -1,26 +1,95 @@
 {% extends "base.html" %}
+{% block title %}Edit Productions{% endblock %}
 {% block content %}
-<h2>Edit Productions</h2>
+<div class="box">
+  <h2 class="title is-4">Add Production</h2>
+  <form method="POST" enctype="multipart/form-data">
+    <div class="field">
+      <label class="label">Title</label>
+      <div class="control">
+        <input class="input" type="text" name="title" required>
+      </div>
+    </div>
 
-<form method="POST">
-    <label>Title: <input type="text" name="title" required></label>
-    <label>Subtitle: <input type="text" name="subtitle"></label>
-    <label>Cover Image URL: <input type="text" name="cover_image"></label>
-    <label>Dates (comma separated): <input type="text" name="dates"></label>
-    <label>Location: <input type="text" name="location"></label>
-    <label>Price: <input type="number" step="0.01" name="price"></label>
-    <label>Copyright: <input type="text" name="copyright"></label>
-    <label>Notes:<br><textarea name="notes" rows="4" cols="60"></textarea></label>
-    <button type="submit">Save Production</button>
-</form>
+    <div class="field">
+      <label class="label">Subtitle</label>
+      <div class="control">
+        <input class="input" type="text" name="subtitle">
+      </div>
+    </div>
 
-<hr>
-<h3>Existing Productions</h3>
-<ul>
-  {% for p in productions %}
-    <li><strong>{{ p.title }}</strong> {% if p.dates %}- {{ p.dates }}{% endif %}</li>
-  {% else %}
-    <li>No productions yet.</li>
-  {% endfor %}
-</ul>
+    <div class="field">
+      <label class="label">Cover Image (upload)</label>
+      <div class="control">
+        <input class="input" type="file" name="cover_image" accept="image/*">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Dates (comma separated)</label>
+      <div class="control">
+        <input class="input" type="text" name="dates" placeholder="Month Day, December 2">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Location</label>
+      <div class="control">
+        <input class="input" type="text" name="location">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Price</label>
+      <div class="control">
+        <input class="input" type="number" step="0.01" name="price">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Copyright</label>
+      <div class="control">
+        <input class="input" type="text" name="copyright">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Notes</label>
+      <div class="control">
+        <textarea class="textarea" name="notes"></textarea>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="control">
+        <button class="button is-primary" type="submit">Add Production</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="box">
+  <h3 class="title is-5">Existing Productions</h3>
+  <table class="table is-fullwidth">
+    <thead>
+      <tr><th>Title</th><th>Dates</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      {% for p in productions %}
+      <tr>
+        <td>{{ p.title }}</td>
+        <td>{{ p.dates }}</td>
+        <td>
+          <a class="button is-small is-info" href="{{ url_for('edit.edit_production', id=p.id) }}">Edit</a>
+          <form style="display:inline" method="POST" action="{{ url_for('edit.delete_production', id=p.id) }}" onsubmit="return confirm('Delete production?');">
+            <button class="button is-small is-danger" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3">No productions yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

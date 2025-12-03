@@ -1,79 +1,54 @@
 {% extends "base.html" %}
 {% block title %}Songs{% endblock %}
-
 {% block content %}
-<h1>Songs</h1>
+<div class="box">
+  <h2 class="title is-4">Song List</h2>
 
-{# --- ACT I --- #}
-<h2>Act I</h2>
-<table>
-    <tr>
-        <th>Song Title</th>
-        <th>Performers</th>
-    </tr>
+  <h3 class="title is-5">Act I</h3>
+  {% if grouped_songs['1'] %}
+    <ul>
+      {% for s in grouped_songs['1'] %}
+        <li>
+          <strong>{{ s.title }}</strong>
+          {% if s.performer_roles %}
+            <ul>
+              {% for r in s.performer_roles %}
+                <li>{{ r.name }}{% if r.student %} — {{ r.student.name }}{% endif %}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p><em>No songs for Act I</em></p>
+  {% endif %}
 
-    {% set has_act1 = false %}
-    {% for song in songs %}
-        {% if song.act|string == "1" %}
-            {% set has_act1 = true %}
-            <tr>
-                <td>{{ song.title }}</td>
-                <td>
-                    {% if song.performers %}
-                        <ul>
-                        {% for perf in song.performers %}
-                            <li>{{ perf.role.name }}</li>
-                        {% endfor %}
-                        </ul>
-                    {% else %}
-                        <em>No performers listed</em>
-                    {% endif %}
-                </td>
-            </tr>
-        {% endif %}
-    {% endfor %}
-</table>
 
-{# --- INTERMISSION --- #}
-{% set has_act2 = false %}
-{% for song in songs %}
-    {% if song.act|string == "2" %}
-        {% set has_act2 = true %}
-    {% endif %}
-{% endfor %}
+  {% if grouped_songs['1'] and grouped_songs['2'] %}
+    <h3 class="title is-5">Intermission: 30 Minutes</h3>
+  {% endif %}
 
-{% if has_act1 and has_act2 %}
-    <h2>Intermission: 30 minutes</h2>
-{% endif %}
 
-{# --- ACT II --- #}
-{% if has_act2 %}
-<h2>Act II</h2>
-<table>
-    <tr>
-        <th>Song Title</th>
-        <th>Performers</th>
-    </tr>
+  <h3 class="title is-5">Act II</h3>
+  {% if grouped_songs['2'] %}
+    <ul>
+      {% for s in grouped_songs['2'] %}
+        <li>
+          <strong>{{ s.title }}</strong>
+          {% if s.performer_roles %}
+            <ul>
+              {% for r in s.performer_roles %}
+                <li>{{ r.name }}{% if r.student %} — {{ r.student.name }}{% endif %}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p><em>No songs for Act II</em></p>
+  {% endif %}
 
-    {% for song in songs %}
-        {% if song.act|string == "2" %}
-            <tr>
-                <td>{{ song.title }}</td>
-                <td>
-                    {% if song.performers %}
-                        <ul>
-                        {% for perf in song.performers %}
-                            <li>{{ perf.role.name }}</li>
-                        {% endfor %}
-                        </ul>
-                    {% else %}
-                        <em>No performers listed</em>
-                    {% endif %}
-                </td>
-            </tr>
-        {% endif %}
-    {% endfor %}
-</table>
-{% endif %}
-
+</div>
 {% endblock %}

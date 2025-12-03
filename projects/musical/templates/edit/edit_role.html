@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Edit Role{% endblock %}
+{% block content %}
+<div class="box">
+  <h2 class="title is-4">Edit Role</h2>
+  <form method="POST">
+    <div class="field">
+      <label class="label">Character / Role</label>
+      <div class="control"><input class="input" type="text" name="name" value="{{ role.name }}"></div>
+    </div>
+
+    <div class="field">
+      <label class="label">Group</label>
+      <div class="control"><input class="input" name="group_name" value="{{ role.group_name }}"></div>
+    </div>
+
+    <div class="field">
+      <label class="label">Assign Student</label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select name="student_id">
+            <option value="">--None--</option>
+            {% for s in students %}
+              <option value="{{ s.id }}" {% if role.student_id == s.id %}selected{% endif %}>{{ s.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Production (optional)</label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select name="production_id">
+            <option value="">--None--</option>
+            {% for p in productions %}
+              <option value="{{ p.id }}" {% if role.production_id == p.id %}selected{% endif %}>{{ p.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field"><div class="control"><button class="button is-primary">Save</button></div></div>
+  </form>
+</div>
+{% endblock %}

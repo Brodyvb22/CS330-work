@@ -1,24 +1,36 @@
 {% extends "base.html" %}
 {% block title %}Program{% endblock %}
 {% block content %}
-<h1>{{ production.title }}</h1>
-<h3>{{ production.subtitle }}</h3>
+<div class="box">
+  {% if production %}
+    <h1 class="title">{{ production.title }}</h1>
+    <h2 class="subtitle">{{ production.subtitle }}</h2>
 
-{% if production.cover_image %}
-<img src="{{ url_for('static', filename='covers/' ~ production.cover_image) }}" alt="Cover" style="max-width:300px;">
-{% endif %}
+    {% if production.cover_image %}
+        <figure class="image is-64x64">
+            <img src="{{ url_for('static', filename='covers/' ~ production.cover_image) }}">
+        </figure>
+    {% endif %}
+    <p>filler</p> <!--i added this because the image kept covering the location-->
+    <p><strong>Location:</strong> {{ production.location or '—' }}</p>
+    <p><strong>Admission:</strong> {{ production.price if production.price else '—' }}</p>
 
-<p><strong>Location:</strong> {{ production.location }}</p>
-<p><strong>Admission:</strong> {{ production.price }}</p>
+    <h3 class="title is-5">Performance Dates</h3>
+    <ul>
+      {% if production.dates %}
+        {% for d in production.dates.split(',') %}
+          <li>{{ d.strip() }}</li>
+        {% endfor %}
+      {% else %}
+        <li><em>No dates entered</em></li>
+      {% endif %}
+    </ul>
 
-<h2>Performance Dates</h2>
-<ul>
-    {% for date in dates %}
-        <li>{{ date }}</li>
-    {% endfor %}
-</ul>
-
-<hr>
-<p>{{ production.notes }}</p>
-<p>{{ production.copyright }}</p>
+    <hr>
+    <p>{{ production.notes or '' }}</p>
+    <p class="is-size-7">{{ production.copyright or '' }}</p>
+  {% else %}
+    <p>No production set. Go to Edit → Productions to add one.</p>
+  {% endif %}
+</div>
 {% endblock %}

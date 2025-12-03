@@ -1,52 +1,78 @@
 {% extends "base.html" %}
+{% block title %}Edit Songs{% endblock %}
 {% block content %}
-<h2>Edit Songs</h2>
+<div class="box">
+  <h2 class="title is-4">Add Song</h2>
+  <form method="POST">
+    <div class="field">
+      <label class="label">Song Title</label>
+      <div class="control"><input class="input" name="title" required></div>
+    </div>
 
-<form method="POST">
-    <label>Song Title:
-      <input type="text" name="title" required>
-    </label>
-    <label>Act:
-      <input type="text" name="act">
-    </label>
-    <label>Production:
-      <select name="production_id">
-        <option value="">--None--</option>
-        {% for p in productions %}
-          <option value="{{ p.id }}">{{ p.title }}</option>
+    <div class="field">
+      <label class="label">Act (1 or 2)</label>
+      <div class="control"><input class="input" name="act" placeholder="1 or 2"></div>
+    </div>
+
+    <div class="field">
+      <label class="label">Production</label>
+      <div class="control">
+        <div class="select">
+          <select name="production_id">
+            <option value="">--None--</option>
+            {% for p in productions %}
+              <option value="{{ p.id }}">{{ p.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Performers (select roles)</label>
+      <div class="control">
+        {% for r in roles %}
+          <label class="checkbox"><input type="checkbox" name="performers" value="{{ r.id }}"> {{ r.name }} {% if r.student %}— {{ r.student.name }}{% endif %}</label><br>
         {% endfor %}
-      </select>
-    </label>
+      </div>
+    </div>
 
-    <fieldset>
-      <legend>Performers (select one or more roles)</legend>
-      {% for r in roles %}
-        <label><input type="checkbox" name="performers" value="{{ r.id }}"> {{ r.name }}{% if r.student %} — {{ r.student.name }}{% endif %}</label><br>
+    <div class="field"><div class="control"><button class="button is-primary">Add Song</button></div></div>
+  </form>
+</div>
+
+<div class="box">
+  <h3 class="title is-5">Existing Songs</h3>
+  <table class="table is-fullwidth">
+    <thead><tr><th>Title</th><th>Act</th><th>Production</th><th>Performers</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for s in songs %}
+      <tr>
+        <td>{{ s.title }}</td>
+        <td>{{ s.act or '-' }}</td>
+        <td>{{ s.production.title if s.production else '-' }}</td>
+        <td>
+          {% if s.performers %}
+            <ul>
+            {% for sp in s.performers %}
+              <li>{{ sp.role.name }} {% if sp.role.student %}— {{ sp.role.student.name }}{% endif %}</li>
+            {% endfor %}
+            </ul>
+          {% else %}
+            -
+          {% endif %}
+        </td>
+        <td>
+          <a class="button is-small is-info" href="{{ url_for('edit.edit_song', id=s.id) }}">Edit</a>
+          <form style="display:inline" method="POST" action="{{ url_for('edit.delete_song', id=s.id) }}" onsubmit="return confirm('Delete song?');">
+            <button class="button is-small is-danger" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5">No songs yet.</td></tr>
       {% endfor %}
-    </fieldset>
-
-    <button type="submit">Add Song</button>
-</form>
-
-<hr>
-
-<h3>Existing Songs</h3>
-<ul>
-  {% for s in songs %}
-    <li>
-      <strong>{{ s.title }}</strong>
-      {% if s.act %}- Act {{ s.act }}{% endif %}
-      {% if s.production %}- Prod: {{ s.production.title }}{% endif %}
-      <ul>
-        {% for sp in s.performers %}
-          <li>{{ sp.role.name }}{% if sp.role.student %} — {{ sp.role.student.name }}{% endif %}</li>
-        {% else %}
-          <li><em>No performers assigned</em></li>
-        {% endfor %}
-      </ul>
-    </li>
-  {% else %}
-    <li>No songs yet.</li>
-  {% endfor %}
-</ul>
+    </tbody>
+  </table>
+</div>
 {% endblock %}

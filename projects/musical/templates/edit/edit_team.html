@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Edit Team Member{% endblock %}
+{% block content %}
+<div class="box">
+  <h2 class="title is-4">Edit Team Member</h2>
+  <form method="POST">
+    <div class="field">
+      <label class="label">Name</label>
+      <div class="control"><input class="input" name="name" value="{{ member.name }}"></div>
+    </div>
+
+    <div class="field">
+      <label class="label">Role</label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select name="role">
+            {% for r in team_roles %}
+              <option value="{{ r }}" {% if member.role == r %}selected{% endif %}>{{ r }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Production (optional)</label>
+      <div class="control">
+        <div class="select">
+          <select name="production_id">
+            <option value="">--None--</option>
+            {% for p in productions %}
+              <option value="{{ p.id }}" {% if member.production_id == p.id %}selected{% endif %}>{{ p.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field"><div class="control"><button class="button is-primary">Save</button></div></div>
+  </form>
+</div>
+{% endblock %}

@@ -1,33 +1,67 @@
 {% extends "base.html" %}
+{% block title %}Edit Creative Team{% endblock %}
 {% block content %}
-<h2>Edit Creative Team (Adults)</h2>
+<div class="box">
+  <h2 class="title is-4">Add Creative Team Member</h2>
+  <form method="POST">
+    <div class="field">
+      <label class="label">Name</label>
+      <div class="control"><input class="input" name="name" required></div>
+    </div>
 
-<form method="POST">
-    <label>Name:
-      <input type="text" name="name" required>
-    </label>
-    <label>Role:
-      <input type="text" name="role" required>
-    </label>
-    <label>Production:
-      <select name="production_id">
-        <option value="">--None--</option>
-        {% for p in productions %}
-          <option value="{{ p.id }}">{{ p.title }}</option>
-        {% endfor %}
-      </select>
-    </label>
-    <button type="submit">Add Team Member</button>
-</form>
+    <div class="field">
+      <label class="label">Role</label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select name="role" required>
+            <option value="">Select role…</option>
+            {% for r in team_roles %}
+              <option value="{{ r }}">{{ r }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
 
-<hr>
+    <div class="field">
+      <label class="label">Production</label>
+      <div class="control">
+        <div class="select">
+          <select name="production_id">
+            <option value="">--None--</option>
+            {% for p in productions %}
+              <option value="{{ p.id }}">{{ p.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
 
-<h3>Existing Creative Team Members</h3>
-<ul>
-  {% for t in team_members %}
-    <li>{{ t.name }} - {{ t.role }} {% if t.production %}- Production: {{ t.production.title }}{% endif %}</li>
-  {% else %}
-    <li>No creative team members yet.</li>
-  {% endfor %}
-</ul>
+    <div class="field"><div class="control"><button class="button is-primary">Add</button></div></div>
+  </form>
+</div>
+
+<div class="box">
+  <h3 class="title is-5">Existing Team</h3>
+  <table class="table is-fullwidth">
+    <thead><tr><th>Name</th><th>Role</th><th>Production</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for t in team_members %}
+      <tr>
+        <td>{{ t.name }}</td>
+        <td>{{ t.role }}</td>
+        <td>{{ t.production.title if t.production else '-' }}</td>
+        <td>
+          <a class="button is-small is-info" href="{{ url_for('edit.edit_team', id=t.id) }}">Edit</a>
+          <form style="display:inline" method="POST" action="{{ url_for('edit.delete_team', id=t.id) }}" onsubmit="return confirm('Delete team member?');">
+            <button class="button is-small is-danger" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4">No team members yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

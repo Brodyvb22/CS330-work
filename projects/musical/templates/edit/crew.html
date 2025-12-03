@@ -1,45 +1,67 @@
 {% extends "base.html" %}
+{% block title %}Edit Crew{% endblock %}
 {% block content %}
-<h2>Edit Crew (Student tech / stage)</h2>
+<div class="box">
+  <h2 class="title is-4">Add Crew</h2>
+  <form method="POST">
+    <div class="field">
+      <label class="label">Job / Responsibility</label>
+      <div class="control"><input class="input" name="job" required></div>
+    </div>
 
-<form method="POST">
-    <label>Job / Responsibility:
-      <input type="text" name="job" required>
-    </label>
+    <div class="field">
+      <label class="label">Assign Student</label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select name="student_id">
+            <option value="">--None--</option>
+            {% for s in students %}
+              <option value="{{ s.id }}">{{ s.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
 
-    <label>Assign Student:
-      <select name="student_id">
-        <option value="">--None--</option>
-        {% for s in students %}
-          <option value="{{ s.id }}">{{ s.name }} ({{ s.year }})</option>
-        {% endfor %}
-      </select>
-    </label>
+    <div class="field">
+      <label class="label">Production (optional)</label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select name="production_id">
+            <option value="">--None--</option>
+            {% for p in productions %}
+              <option value="{{ p.id }}">{{ p.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
 
-    <label>Production:
-      <select name="production_id">
-        <option value="">--None--</option>
-        {% for p in productions %}
-          <option value="{{ p.id }}">{{ p.title }}</option>
-        {% endfor %}
-      </select>
-    </label>
+    <div class="field"><div class="control"><button class="button is-primary">Add Crew</button></div></div>
+  </form>
+</div>
 
-    <button type="submit">Add Crew</button>
-</form>
-
-<hr>
-
-<h3>Existing Crew</h3>
-<ul>
-  {% for c in crew_members %}
-    <li>
-      <strong>{{ c.job }}</strong>
-      {% if c.student %}- Student: {{ c.student.name }}{% endif %}
-      {% if c.production %}- Production: {{ c.production.title }}{% endif %}
-    </li>
-  {% else %}
-    <li>No crew yet.</li>
-  {% endfor %}
-</ul>
+<div class="box">
+  <h3 class="title is-5">Existing Crew</h3>
+  <table class="table is-fullwidth">
+    <thead><tr><th>Job</th><th>Student</th><th>Production</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for c in crew_members %}
+      <tr>
+        <td>{{ c.job }}</td>
+        <td>{{ c.student.name if c.student else '-' }}</td>
+        <td>{{ c.production.title if c.production else '-' }}</td>
+        <td>
+          <a class="button is-small is-info" href="{{ url_for('edit.edit_crew', id=c.id) }}">Edit</a>
+          <form style="display:inline" method="POST" action="{{ url_for('edit.delete_crew', id=c.id) }}" onsubmit="return confirm('Delete crew?');">
+            <button class="button is-small is-danger" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4">No crew yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

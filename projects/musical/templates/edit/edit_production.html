@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Edit Production{% endblock %}
+{% block content %}
+<div class="box">
+  <h2 class="title is-4">Edit Production</h2>
+  <form method="POST" enctype="multipart/form-data">
+    <div class="field">
+      <label class="label">Title</label>
+      <div class="control"><input class="input" type="text" name="title" value="{{ production.title }}"></div>
+    </div>
+    <div class="field">
+      <label class="label">Subtitle</label>
+      <div class="control"><input class="input" type="text" name="subtitle" value="{{ production.subtitle }}"></div>
+    </div>
+    <div class="field">
+      <label class="label">Cover Image</label>
+      <div class="control"><input class="input" type="file" name="cover_image" accept="image/*"></div>
+      {% if production.cover_image %}
+        <p>Current: <img src="{{ url_for('static', filename='covers/' ~ production.cover_image) }}" style="max-height:80px;"></p>
+      {% endif %}
+    </div>
+    <div class="field">
+      <label class="label">Dates</label>
+      <div class="control"><input class="input" type="text" name="dates" value="{{ production.dates }}"></div>
+    </div>
+    <div class="field">
+      <label class="label">Location</label>
+      <div class="control"><input class="input" type="text" name="location" value="{{ production.location }}"></div>
+    </div>
+    <div class="field">
+      <label class="label">Price</label>
+      <div class="control"><input class="input" type="number" step="0.01" name="price" value="{{ production.price }}"></div>
+    </div>
+    <div class="field">
+      <label class="label">Notes</label>
+      <div class="control"><textarea class="textarea" name="notes">{{ production.notes }}</textarea></div>
+    </div>
+    <div class="field">
+      <div class="control"><button class="button is-primary">Save</button></div>
+    </div>
+  </form>
+</div>
+{% endblock %}

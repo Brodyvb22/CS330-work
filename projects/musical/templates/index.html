@@ -1,16 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Musical Database</title>
-    <style>
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container has-text-centered">
+    <h2 class="title">Welcome</h2>
+    <p class="subtitle">Choose an area to view or edit the program.</p>
 
-    </style>
-</head>
-<body>
-    <h1>Welcome to the Musical Production Database</h1>
-
-    <a class="button secondary" href="/view">Audience View</a>
-    <a class="button" href="/edit/production">Director Area</a>
-
-</body>
-</html>
+    <div class="buttons is-centered">
+      <a class="button is-link is-medium" href="{{ url_for('view.program') }}">Audience View</a>
+      <a class="button is-primary is-medium" href="{{ url_for('edit.production') }}">Director / Edit</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

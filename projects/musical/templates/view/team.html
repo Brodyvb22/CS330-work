@@ -1,13 +1,20 @@
 {% extends "base.html" %}
 {% block title %}Creative Team{% endblock %}
 {% block content %}
-<h1>Creative Team</h1>
-
-<ul>
-{% for member in team %}
-    <li>
-        <strong>{{ member.role }}:</strong> {{ member.name }}
-    </li>
-{% endfor %}
-</ul>
+<div class="box">
+  <h2 class="title is-4">Creative Team</h2>
+  <table class="table is-fullwidth">
+    <thead><tr><th>Name</th><th>Role</th></tr></thead>
+    <tbody>
+      {% for t in team %}
+      <tr>
+        <td>{{ t.name }}</td>
+        <td>{{ t.role }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="2">No creative team yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

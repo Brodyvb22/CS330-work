@@ -1,26 +1,21 @@
 {% extends "base.html" %}
 {% block title %}Cast{% endblock %}
 {% block content %}
-<h1>Cast</h1>
-
-<table>
-    <tr>
-        <th>Role</th>
-        <th>Student</th>
-    </tr>
-
-    {% for role in roles %}
-    <tr>
+<div class="box">
+  <h2 class="title is-4">Cast</h2>
+  <table class="table is-fullwidth">
+    <thead><tr><th>Role</th><th>Group</th><th>Performer</th></tr></thead>
+    <tbody>
+      {% for role in roles %}
+      <tr>
         <td>{{ role.name }}</td>
-        <td>
-            {% if role.student %}
-                {{ role.student.name }}
-            {% else %}
-                <em>Unassigned</em>
-            {% endif %}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-
+        <td>{{ role.group_name or '-' }}</td>
+        <td>{{ role.student.name if role.student else '-' }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3">No cast roles yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}
