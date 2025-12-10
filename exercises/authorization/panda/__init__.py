@@ -8,7 +8,7 @@ PandAuth initialization
 
 import pathlib
 import secrets
-
+import os
 import dotenv
 import requests
 from flask import Flask
@@ -37,9 +37,13 @@ def create_app() -> Flask:
     app.config.from_prefixed_env()
     app.config.from_mapping(dotenv.dotenv_values(app_dir / pathlib.Path(".env")))
 
-    # Initialize secret key if necessary
+    app.config["GOOGLE_CLIENT_ID"] = os.environ.get("GOOGLE_CLIENT_ID", "fake-client-id")
+    app.config["GOOGLE_CLIENT_SECRET"] = os.environ.get("GOOGLE_CLIENT_SECRET", "fake-client-secret")
+   
+   # Initialize secret key if necessary
     if not app.config.get("SECRET_KEY"):
         app.config["SECRET_KEY"] = secrets.token_hex()
+
 
     # Initialize login subsystem
     login_manager.init_app(app)

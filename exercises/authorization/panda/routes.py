@@ -7,10 +7,11 @@ PandAuth routes
 """
 
 from flask import Blueprint, render_template
+from flask_login import current_user
 
 main = Blueprint("main", __name__, url_prefix="/")
 
 
 @main.route("/")
 def index():
-    return render_template("index.jinja")
+    return render_template("index.jinja", User=current_user)
